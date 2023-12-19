@@ -8,7 +8,7 @@ class Plant {
     private $plantimg;
     private $plantname;
     private $plantprice;
-//    private $plantcategory;
+    private $plantcategory;
 
     public function __construct() {
         $this->db = new DatabaseConnection();
@@ -26,24 +26,17 @@ class Plant {
     public function insertData(): void
     {
         try {
-            $stmt = $this->db->prepare('INSERT INTO plants(plantName, plantImage, plantPrice) VALUES (:plantName, :plantImage, :plantPrice)');
+            $stmt = $this->db->prepare('INSERT INTO plants(plantName, plantImage, plantPrice , idcategory) VALUES (:plantName, :plantImage, :plantPrice , :category)');
             $stmt->bindParam(':plantName', $this->plantname);
             $stmt->bindParam(':plantImage', $this->plantimg);
             $stmt->bindParam(':plantPrice', $this->plantprice);
-//            $stmt->bindParam(':categoryId', $this->plantcategory);
+            $stmt->bindParam(':category', $this->plantcategory);
             if($stmt->execute())
             {
                 echo "dkehlt";
+            } else{
+                echo "Wlah la Dkhelti";
             }
-            else{
-                echo "no ";
-            }
-            echo "hani";
-//            if ($stmt->rowCount() > 0) {
-//                echo 'Data Saved';
-//            } else {
-//                echo 'No rows were inserted';
-//            }
         } catch (PDOException $e) {
             echo "hani tani: " . $e->getMessage();
         }
@@ -55,9 +48,7 @@ class Plant {
                     FROM plants 
                     LEFT JOIN categories ON plants.idcategory = categories.categoryId");
         $pdo_statement->execute();
-        $result = $pdo_statement->fetchAll(PDO::FETCH_ASSOC);
-
-        return $result;
+        return $pdo_statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
 
@@ -78,6 +69,15 @@ class Plant {
 //        $stmt->bindParam(':plantPrice',$this->plantprice);
 //        $stmt->execute();
 //        return $stmt;
+    }
+
+
+
+    public function getCategories()
+    {
+        $stmt = $this->db->prepare('SELECT categoryId, categoryName FROM categories');
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
 }

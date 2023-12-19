@@ -10,10 +10,10 @@ if (isset($_POST['add_product'])) {
     $price = $_POST['price'];
     $plantname = $_POST['nameplant'];
     // Set values using setter methods (if needed)
-//    $plant->__set("plantcategory",$category);
     $plant->__set("plantimg",$lastImage);
     $plant->__set("plantprice",$price);
     $plant->__set("plantname",$plantname);
+    $plant->__set("plantcategory",$category);
     try {
         $plant->insertData();
         echo 'Inserted successfully';
@@ -266,9 +266,10 @@ if (isset($_POST['delete_product'])) {
                         <select id="currency" name="option"
                                 class="h-fit rounded-md border-0 bg-transparent py-0 pl-2 pr-7 text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm">
                             <option selected>Choose Category</option>
-                            <?php  ?>
-                                <option value="">rrr</option>
-                            <?php  ?>
+                            <?php
+                            foreach ($plant->getCategories() as $row):?>
+                                <option value="<?= $row['categoryId'] ?>"><?= $row['categoryName'] ?></option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
                     <div class="col-span-full">
