@@ -1,73 +1,75 @@
 <?php
+global $user;
 require_once './config/connecte.php';
 
+if (isset($_POST['submit'])) {
+    $nom = $_POST['name'];
+    $email = $_POST['email'];
+    $password = $_POST['mot_de_passe'];// Assuming 'role' is the name of the form field for role selection
 
+
+    try {
+        if ($user->insertUser($nom, $email, $password )) {
+           echo 'login succesfully';
+        } else {
+            echo 'error';
+        }
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
 
 ?>
 
 <!doctype html>
 <html lang="en">
 <head>
-    <?php include './include/head.php'?>
-    <title>Sign Up | Page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="../js/navbar.js"></script>
+    <link rel="stylesheet" href="./css/index.css?v=<?php echo time(); ?>">
+    <title>Document</title>
 </head>
 <body>
-<div class="flex justify-center my-12">
-    <div class="flex flex-col justify-center w-[90%] bg-white border border-black rounded-xl md:w-1/2">
-        <form class="w-3/4 mx-auto" method="post">
-            <div class="flex flex-col mt-8">
-                <div class="capitalize mb-5 font-semibold text-xl">
-                    <p>Sign Up</p>
-                </div>
+<div class="container">
+    <div class="login">
+        <div class="left">
+            <h1 class="text-lg">Welcome To Opep Garden</h1>
+            <h3>One Stope For All the variety Of Plants</h3>
+            <div class="blob">
+                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <path fill="#A6CF98"
+                          d="M65.8,-51.8C81.4,-33,87.3,-5.8,81.3,17.8C75.3,41.4,57.3,61.5,35.1,71.8C12.9,82.1,-13.6,82.6,-36.2,72.6C-58.9,62.7,-77.8,42.4,-82.9,19.1C-88.1,-4.1,-79.5,-30.3,-63.4,-49.3C-47.3,-68.3,-23.6,-80.1,0.8,-80.7C25.1,-81.3,50.3,-70.7,65.8,-51.8Z"
+                          transform="translate(100 100)" />
+                </svg>
+                <img class="img" src="./img/plants_1.png" alt="">
+            </div>
+        </div>
+        <div class="right">
+            <h4><span><i class='bx bx-leaf'></i></span>Opep Garden</h4>
+            <h2>Sign Up to Your Opep Account</h2>
+            <div class="inputs">
+                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                    <label>
+                        <input class="input" type="text" name="name" placeholder="Full Name    ">
+                    </label>
+                    <label>
+                        <input class="input" type="text" name="email" placeholder="Email">
+                    </label>
+                    <label>
+                        <input class="input" type="text" name="mot_de_passe" placeholder="Password">
 
-                <?php
-                if (!empty($msg)) {
-                    echo '<div class="bg-red-500 mb-3 rounded-lg">';
-                    echo '<p class="text-white text-lg text-center">' . $msg . '</p>';
-                    echo '</div>';
-                }
-                ?>
+                    </label>
+                    <input type="submit" name="submit" value="Register" class="submit">
+                </form>
+                <small class="signup">If You Have Account You Can<a href="./pages/login.php">Login</a></small>
+            </div>
 
-                <!-- Start of input name -->
-                <div class="flex flex-col mb-3">
-                    <div id="nameBorder" class="flex flex-col border-2 border-[#A1A1A1] p-2 rounded-md">
-                        <p class="text-xs">Username</p>
-                        <input class="placeholder:font-light placeholder:text-xs focus:outline-none" id="username" type="text" name="username" placeholder="John" autocomplete="off">
-                    </div>
-                    <div id="userERR" class="text-red-600 text-xs pl-3"></div>
-                </div>
-                <div class="flex flex-col mb-3">
-                    <div id="nameBorder" class="flex flex-col border-2 border-[#A1A1A1] p-2 rounded-md">
-                        <p class="text-xs">Email</p>
-                        <input class="placeholder:font-light placeholder:text-xs focus:outline-none" id="email" type="text" name="email" placeholder="example@exm.com" autocomplete="off">
-                    </div>
-                    <div id="emailERR" class="text-red-600 text-xs pl-3"></div>
-                </div>
-                <!-- End of input name -->
-                <div class="flex flex-col mb-3">
-                    <div id="cardnumberBorder" class="flex flex-col border-2 border-[#A1A1A1] p-2 rounded-md">
-                        <p class="text-xs">Password</p>
-                        <input class="placeholder:font-light placeholder:text-xs focus:outline-none" id="password" type="password" name="password" placeholder="***************">
-                    </div>
-                    <div id="passwordErr" class="text-red-600 text-xs pl-3"></div>
-                </div>
-                <div class="flex flex-col mb-3">
-                    <div id="cardnumberBorder" class="flex flex-col border-2 border-[#A1A1A1] p-2 rounded-md">
-                        <p class="text-xs">Repeat password</p>
-                        <input class="placeholder:font-light placeholder:text-xs focus:outline-none" id="repeat" type="password" name="password2" placeholder="***************">
-                    </div>
-                    <div id="repeatErr" class="text-red-600 text-xs pl-3"></div>
-                </div>
-            </div>
-            <div class="flex justify-start mb-8">
-                <a href="login.php" class="text-sm text-gray-800 underline">Already have an account? Log In</a>
-            </div>
-            <div class="flex justify-end mb-4">
-                <input type="submit" name="submit" class="cursor-pointer px-8 py-2 bg-[#9fff30] font-semibold rounded-lg border-2 border-[#6da22f]" value="Continue">
-            </div>
-        </form>
+        </div>
     </div>
 </div>
-
 </body>
 </html>
