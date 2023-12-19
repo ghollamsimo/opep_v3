@@ -51,7 +51,9 @@ class Plant {
 
     public function read(): array
     {
-        $pdo_statement = $this->db->prepare("SELECT * FROM plants");
+        $pdo_statement = $this->db->prepare("SELECT plants.*, categories.categoryName as nom 
+                    FROM plants 
+                    LEFT JOIN categories ON plants.idcategory = categories.categoryId");
         $pdo_statement->execute();
         $result = $pdo_statement->fetchAll(PDO::FETCH_ASSOC);
 
