@@ -1,4 +1,4 @@
-<?php include './head.php'?>
+
 <link rel="stylesheet" href="../css/nav.css">
 
 <nav class="navbar">

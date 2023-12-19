@@ -50,27 +50,27 @@
 
                     </a>
                 </li>
-
-                <li class="nav-link">
-                    <a href="./users.php">
-                        <i class='bx bx-message-square-add icon'></i>
-
-                    </a>
-                </li>
-
-                <li class="nav-link">
-                    <a href="./users.php">
-                        <i class='bx bx-tag-alt icon'></i>
-
-                    </a>
-                </li>
-
-                <li class="nav-link">
-                    <a href="./users.php">
-                        <i class='bx bx-book-open icon'></i>
-
-                    </a>
-                </li>
+<!---->
+<!--                <li class="nav-link">-->
+<!--                    <a href="./users.php">-->
+<!--                        <i class='bx bx-message-square-add icon'></i>-->
+<!---->
+<!--                    </a>-->
+<!--                </li>-->
+<!---->
+<!--                <li class="nav-link">-->
+<!--                    <a href="./users.php">-->
+<!--                        <i class='bx bx-tag-alt icon'></i>-->
+<!---->
+<!--                    </a>-->
+<!--                </li>-->
+<!---->
+<!--                <li class="nav-link">-->
+<!--                    <a href="./users.php">-->
+<!--                        <i class='bx bx-book-open icon'></i>-->
+<!---->
+<!--                    </a>-->
+<!--                </li>-->
             </ul>
         </div>
 
