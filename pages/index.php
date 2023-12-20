@@ -1,21 +1,18 @@
 <?php
-global $user;
-require_once './config/connecte.php';
+require_once './class/user.class.php';
+$user = new User();
 
 if (isset($_POST['submit'])) {
-    $nom = $_POST['name'];
+    $fullname = $_POST['name'];
     $email = $_POST['email'];
-    $password = $_POST['mot_de_passe'];// Assuming 'role' is the name of the form field for role selection
+    $pass = $_POST['password'];
 
+    $hashedPass = password_hash($pass, PASSWORD_DEFAULT);
 
-    try {
-        if ($user->insertUser($nom, $email, $password )) {
-           echo 'login succesfully';
-        } else {
-            echo 'error';
-        }
-    } catch (PDOException $e) {
-        echo "Error: " . $e->getMessage();
+    if ($user->signup($fullname, $email, $hashedPass)) {
+        header("Location: register.php?successfully");
+    } else {
+        header("Location: register.php?failure");
     }
 }
 
@@ -60,7 +57,7 @@ if (isset($_POST['submit'])) {
                         <input class="input" type="text" name="email" placeholder="Email">
                     </label>
                     <label>
-                        <input class="input" type="text" name="mot_de_passe" placeholder="Password">
+                        <input class="input" type="text" name="password" placeholder="Password">
 
                     </label>
                     <input type="submit" name="submit" value="Register" class="submit">
